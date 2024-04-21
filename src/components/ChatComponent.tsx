@@ -107,7 +107,7 @@ const ChatComponent = ({ chatId, file_key }: Props) => {
           onChange={handleInputChange}
           value={input}
         />
-        <Button type="submit" className="bg-blue-600 ml-2">
+        <Button type="submit" className="bg-purple-500 ml-2">
           <Send className="w-4 h-4" />
         </Button>
       </form>

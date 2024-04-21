@@ -15,8 +15,8 @@ export default function Home() {
           </div>
           {/* <div className="flex items-center"> */}
           <p className="max-w-xl text-lg mt-2 text-slate-600 text-center">
-            Join millions of students, researchers and professionals to
-            instantly answer questions and understand research with AI
+            Effortlessly work with PDFs using an AI-powered platform that makes
+            reading, discussing, and getting support easy and efficient.
           </p>
           <Link href={`/chat/${uuid}`}>
             <Button className="mt-4">Go to chats</Button>
