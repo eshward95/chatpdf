@@ -1,9 +1,7 @@
-"use client";
 import { DrizzleChat } from "@/lib/db/schema";
 import { cn } from "@/lib/utils";
 import { MessageCircle, PlusCircle } from "lucide-react";
 import Link from "next/link";
-import React from "react";
 import { Button } from "./ui/button";
 
 type Props = {
@@ -13,8 +11,6 @@ type Props = {
 };
 
 const ChatSideBar = ({ chats, chatId, uid }: Props) => {
-  const [loading, setLoading] = React.useState(false);
-
   return (
     <div className="w-full h-screen overflow-scroll soff p-4 text-gray-200 bg-gray-900">
       <Link href="/">
