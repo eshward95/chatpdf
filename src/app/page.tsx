@@ -26,6 +26,15 @@ export default function Home() {
             <FileUpload />
           </div>
         </div>
+        <footer className="text-center border-t border-neutral-200 dark:border-neutral-700">
+          <h1
+            className="font-semibold text-md bg-gradient-to-tl from-rose-400 via-fuchsia-500 to-indigo-500
+           my-3
+        inline-block text-transparent bg-clip-text"
+          >
+            Made with :) by ED
+          </h1>
+        </footer>
       </div>
     </main>
   );
