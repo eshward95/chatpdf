@@ -14,7 +14,8 @@ import { eq } from "drizzle-orm";
 const ChatPage = async ({ params: { slug } }: any) => {
   const [uid, chatId] = slug;
   const _chats = await db.select().from(chats).where(eq(chats.userId, uid));
-  const currentChat = _chats.find((chat) => chat.id === parseInt(chatId));
+  const currentChat = await _chats.find((chat) => chat.id === parseInt(chatId));
+  console.log("uid", uid);
   console.log("Slug", slug);
   console.log("current chat", currentChat);
   console.log("_chats", _chats);
