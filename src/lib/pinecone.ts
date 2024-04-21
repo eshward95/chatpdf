@@ -60,7 +60,7 @@ export async function loadS3IntoPinecone(file_key: string) {
     let vectors = await Promise.all(documents.flat().map(embedDocument));
     console.log("Vectors", vectors);
     vectors = vectors.filter((v) => v?.values !== undefined);
-    await logVectorsToFile(vectors);
+    // await logVectorsToFile(vectors);
 
     console.log("Uploading vectors to Pinecone");
     const client = await getPineconeClient();
