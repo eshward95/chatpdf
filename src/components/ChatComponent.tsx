@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Message } from "ai";
 import { useChat } from "ai/react";
 import axios from "axios";
-import { RotateCcwIcon, Send, Trash2 } from "lucide-react";
+import { Loader2, RotateCcwIcon, Send, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useRef } from "react";
 import MessageList from "./MessageList";
@@ -45,7 +45,7 @@ const ChatComponent = ({ chatId, file_key }: Props) => {
       },
     });
 
-  const { mutate: mutateReset } = useMutation({
+  const { mutate: mutateReset, isPending: isPendingReset } = useMutation({
     mutationFn: async ({ chatId }: { chatId: number }) => {
       await axios.post("/api/reset-chat", { chatId });
     },
@@ -54,7 +54,7 @@ const ChatComponent = ({ chatId, file_key }: Props) => {
       return queryClient.invalidateQueries({ queryKey: ["chat", chatId] });
     },
   });
-  const { mutate: mutateDelete } = useMutation({
+  const { mutate: mutateDelete, isPending: isPendingDelete } = useMutation({
     mutationFn: async ({
       chatId,
       file_key,
@@ -93,10 +93,14 @@ const ChatComponent = ({ chatId, file_key }: Props) => {
             <Tooltip>
               <TooltipTrigger className="cursor-default">
                 {/* <Button variant="ghost" className="text-slate-500 text-xs p-0"> */}
-                <Trash2
-                  className="cursor-pointer text-red-500"
-                  onClick={() => mutateDelete({ chatId, file_key })}
-                />
+                {isPendingDelete ? (
+                  <Loader2 className="animate-spin text-red-600" />
+                ) : (
+                  <Trash2
+                    className="cursor-pointer text-red-600"
+                    onClick={() => mutateDelete({ chatId, file_key })}
+                  />
+                )}
                 {/* </Button>  */}
               </TooltipTrigger>
               <TooltipContent
@@ -110,10 +114,14 @@ const ChatComponent = ({ chatId, file_key }: Props) => {
           <TooltipProvider delayDuration={100}>
             <Tooltip>
               <TooltipTrigger className="cursor-default">
-                <RotateCcwIcon
-                  className="cursor-pointer text-slate-500"
-                  onClick={() => mutateReset({ chatId })}
-                />
+                {isPendingReset ? (
+                  <Loader2 className="animate-spin text-slate-500" />
+                ) : (
+                  <RotateCcwIcon
+                    className="cursor-pointer text-slate-500"
+                    onClick={() => mutateReset({ chatId })}
+                  />
+                )}
               </TooltipTrigger>
               <TooltipContent
                 side="left"
