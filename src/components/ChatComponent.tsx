@@ -10,6 +10,12 @@ import React, { useRef } from "react";
 import MessageList from "./MessageList";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 type Props = {
   chatId: number;
   file_key: string;
@@ -61,6 +67,7 @@ const ChatComponent = ({ chatId, file_key }: Props) => {
     onSuccess: () => {
       setMessages([]);
       router.replace(`/chat/${uuid}`);
+      router.refresh();
       return queryClient.invalidateQueries({ queryKey: ["chat", chatId] });
     },
   });
@@ -82,16 +89,47 @@ const ChatComponent = ({ chatId, file_key }: Props) => {
       <div className="inset-x-0 sticky top-0 p-2 bg-white h-fit flex items-center justify-between">
         <h3 className="text-xl font-bold">Chat</h3>
         <div className="flex gap-2 cursor-pointer">
-          <Button variant="ghost" className="text-slate-500 text-xs p-0">
-            <Trash2 onClick={() => mutateDelete({ chatId, file_key })} />
-          </Button>
-          <Button
+          <TooltipProvider delayDuration={100}>
+            <Tooltip>
+              <TooltipTrigger className="cursor-default">
+                {/* <Button variant="ghost" className="text-slate-500 text-xs p-0"> */}
+                <Trash2
+                  className="cursor-pointer text-red-500"
+                  onClick={() => mutateDelete({ chatId, file_key })}
+                />
+                {/* </Button>  */}
+              </TooltipTrigger>
+              <TooltipContent
+                side="left"
+                className="bg-secondary-foreground text-secondary p-2"
+              >
+                Delete chat
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider delayDuration={100}>
+            <Tooltip>
+              <TooltipTrigger className="cursor-default">
+                <RotateCcwIcon
+                  className="cursor-pointer text-slate-500"
+                  onClick={() => mutateReset({ chatId })}
+                />
+              </TooltipTrigger>
+              <TooltipContent
+                side="left"
+                className="bg-secondary-foreground text-secondary p-2"
+              >
+                Reset chat
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          {/* <Button
             onClick={() => mutateReset({ chatId })}
             variant="ghost"
             className="text-slate-500 text-xs p-0"
           >
             <RotateCcwIcon />
-          </Button>
+          </Button> */}
         </div>
       </div>
 
